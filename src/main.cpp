@@ -12,6 +12,9 @@ class $modify(SafeModeLevelInfo, LevelInfoLayer) {
 
         auto btnSprite = ButtonSprite::create("SafeMode");
         btnSprite->setScale(0.8f);
+        if (g_safeModeActive) {
+            btnSprite->setColor({255, 100, 100});
+        }
 
         auto btn = CCMenuItemSpriteExtra::create(
             btnSprite,
@@ -35,22 +38,16 @@ class $modify(SafeModeLevelInfo, LevelInfoLayer) {
             myMenu->setPosition({100, 100});
         }
 
-        if (g_safeModeActive) {
-            btnSprite->setColor({255, 100, 100});
-        }
-
         return true;
     }
 
-    void onSafeMode(CCObject*) {
+    void onSafeMode(CCObject* sender) {
         g_safeModeActive = !g_safeModeActive;
 
-        auto btn = this->getChildByIDRecursive("safemode-btn"_spr);
-        if (!btn) return;
-
-        auto sprite = static_cast<ButtonSprite*>(btn->getNormalImage());
-        if (sprite) {
-            sprite->setColor(g_safeModeActive ? ccColor3B{255, 100, 100} : ccColor3B{255, 255, 255});
+        if (auto btn = typeinfo_cast<CCMenuItemSpriteExtra*>(sender)) {
+            if (auto sprite = typeinfo_cast<ButtonSprite*>(btn->getChildren()->objectAtIndex(0))) {
+                sprite->setColor(g_safeModeActive ? ccColor3B{255, 100, 100} : ccColor3B{255, 255, 255});
+            }
         }
 
         FLAlertLayer::create(
@@ -69,17 +66,7 @@ class $modify(SafeModePlayLayer, PlayLayer) {
     bool init(GJGameLevel* level, bool useReplay, bool dontCreateObjects) {
         if (!PlayLayer::init(level, useReplay, dontCreateObjects)) return false;
         m_fields->m_cheated = false;
-        if (g_safeModeActive) {
-            this->schedule(schedule_selector(SafeModePlayLayer::checkCheats), 1.0f);
-        }
         return true;
-    }
-
-    void checkCheats(float dt) {
-        if (!g_safeModeActive) return;
-        if (this->getTimeScale() != 1.0f) {
-            m_fields->m_cheated = true;
-        }
     }
 
     void levelComplete() {
