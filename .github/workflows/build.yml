@@ -3,23 +3,19 @@ name: Build SafeMode
 on:
 workflow_dispatch:
 push:
-branches: [main]
+branches:
+- main
 
 jobs:
 build:
 runs-on: ubuntu-latest
 steps:
-- uses: actions/checkout@v4
+- name: Checkout
+uses: actions/checkout@v4
 
 ```
   - name: Build Geode mod
     uses: geode-sdk/build-geode-mod@main
-    id: build
     with:
       target: Android64
-
-  - uses: actions/upload-artifact@v4
-    with:
-      name: SafeMode-Android64
-      path: ${{ steps.build.outputs.build-output }}
 ```
