@@ -1,11 +1,12 @@
 {
-  "geode": "v5.11.1",
-  "gd": {
-    "android": "*"
-  },
-  "id": "example.safemode",
-  "name": "SafeMode",
-  "version": "v1.0.2",
-  "developer": "MoonLander",
-  "description": "Best-effort attempt to suppress level persistence during completion."
+    "geode": "5.11.1",
+    "gd": {
+        "win": "2.2081",
+        "android": "2.2081"
+    },
+    "id": "yourname.safemode",
+    "name": "SafeMode",
+    "version": "1.0.0",
+    "developer": "YourName",
+    "description": "Adds a SafeMode button to level info. If you cheat, the level won't be completed."
 }
