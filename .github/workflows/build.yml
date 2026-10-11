@@ -1,11 +1,31 @@
 name: Build SafeMode
-on: [push, workflow_dispatch]
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: geode-sdk/build-geode-mod@main
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build Geode mod (Android64)
+        uses: geode-sdk/build-geode-mod@main
         with:
           target: Android64
+
+      - name: Build Geode mod (Android32)
+        uses: geode-sdk/build-geode-mod@main
+        with:
+          target: Android32
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: SafeMode-Build
+          path: build/*.geode
