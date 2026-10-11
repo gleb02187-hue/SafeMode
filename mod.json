@@ -1,0 +1,11 @@
+{
+  "geode": "v5.11.1",
+  "gd": {
+    "android": "*"
+  },
+  "id": "example.safemode",
+  "name": "SafeMode",
+  "version": "v1.0.2",
+  "developer": "MoonLander",
+  "description": "Best-effort attempt to suppress level persistence during completion."
+}
