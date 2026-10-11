@@ -22,4 +22,3 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: SafeMode-Build
-          path: build/*.geode
